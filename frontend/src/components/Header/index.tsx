@@ -1,11 +1,36 @@
 import { CollectionsBookmark, Home, PostAddOutlined } from "@mui/icons-material";
 import "./header.css";
 import { Link } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { themeState } from "../../store/Theme/atoms";
+import React from "react";
 
 export default function Header() {
+  const setTheme = useSetRecoilState(themeState);
+  try {
+    const theme = useRecoilValue(themeState);
+  } catch (error) {
+    console.error(error);
+    console.log(themeState);
+  }
+  React.useEffect(() => {}, []);
+  const handleTheme = () => {
+    setTheme((prev) => ({ active: prev.active === "dark" ? "light" : "dark" }));
+  };
+
   return (
     <header className="header">
-      <h1 className="header__title"> Flash Cards</h1>
+      <div>
+        <h1 className="header__title"> Flash Cards</h1>
+        <button
+          onClick={() => {
+            handleTheme();
+          }}
+          aria-label="Toggle Theme"
+        >
+          <div id="circle"></div>
+        </button>
+      </div>
 
       <nav className="navigation">
         <ul className="navigation__list">
