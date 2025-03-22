@@ -10,7 +10,7 @@ export default function MyRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/cards/add" element={<AddFlash />} />
-      <Route path="/collections/" element={<Collections />} />
+      <Route path="/collections" element={<Collections />} />
       <Route path="/collections/:id/flash/:flash_id" element={<AwserFlash />} />
     </Routes>
   );

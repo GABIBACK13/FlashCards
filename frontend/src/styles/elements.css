@@ -1,6 +1,9 @@
 a {
   font-weight: 500;
   text-decoration: inherit;
+  &:hover {
+    color: var(--on-color);
+  }
 }
 h1 {
   font-size: 3.2em;
@@ -9,7 +12,9 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 2px solid var(--primary-color-opacity);
+  min-width: 80px;
+  min-height: 35px;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;

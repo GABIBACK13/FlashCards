@@ -1,22 +1,21 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+import { ToastContainer } from "react-toastify";
+import App from "./App";
 
-import "./styles/themes/index.css";
 import "./styles/index.css";
+import "./styles/themes/index.css";
 import "./styles/elements.css";
 
-import App from "./App";
-import { RecoilProvider } from "./components/RecoilProvider";
-import { BrowserRouter } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
     <BrowserRouter>
-      <RecoilProvider>
+      <RecoilRoot>
         <App />
-      </RecoilProvider>
+      </RecoilRoot>
       <ToastContainer />
     </BrowserRouter>
-  </StrictMode>
+  </React.StrictMode>
 );

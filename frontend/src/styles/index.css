@@ -1,14 +1,3 @@
-:root {
-  font-family: var(--font-main);
-  line-height: 1.5;
-  font-weight: 400;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 #root {
   width: 100%;
   height: 100%;
@@ -25,6 +14,6 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100dvh;
+  background-color: var(--off-color);
+  color: var(--text-color);
 }
-
-
