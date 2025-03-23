@@ -29,6 +29,7 @@ export default function Header() {
             handleTheme();
           }}
           aria-label="Toggle Theme"
+          title="Toggle Theme"
         >
           <div id="circle" className={theme.active}></div>
         </button>
@@ -37,17 +38,17 @@ export default function Header() {
       <nav className="navigation">
         <ul className="navigation__list">
           <li className={`navigation__item ${currentPath === "/" ? "selected" : ""}`}>
-            <Link to={"/"} title="Home">
+            <Link to={"/"} title="Home" aria-label="Home link">
               <Home style={{ fontSize: "2rem" }} />
             </Link>
           </li>
           <li className={`navigation__item ${currentPath === "/cards/add" ? "selected" : ""}`}>
-            <Link to={"/cards/add"} title="AddCard">
+            <Link to={"/cards/add"} title="AddCard" aria-label="Add Card link">
               <PostAddOutlined style={{ fontSize: "2rem" }} />
             </Link>
           </li>
           <li className={`navigation__item ${currentPath === "/collections/" ? "selected" : ""}`}>
-            <Link to={"/collections/"} title="Collections">
+            <Link to={"/collections/"} title="Collections" aria-label="Collections link">
               <CollectionsBookmark style={{ fontSize: "2rem" }} />
             </Link>
           </li>

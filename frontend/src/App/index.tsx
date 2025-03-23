@@ -6,6 +6,7 @@ import ThemeInitializer from "../components/ThemeInitializer";
 function App() {
   return (
     <div>
+      <ThemeInitializer />
       <Header />
       <MyRoutes />
     </div>
