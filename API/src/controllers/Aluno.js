@@ -1,6 +1,4 @@
 import Aluno from "../models/alunos";
-import File from "../models/files";
-
 class AlunoController {
   async index(req, res) {
     try {

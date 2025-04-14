@@ -1,20 +1,19 @@
-import { Sequelize } from "sequelize";
-import dbConfig from "../config/database";
+import { Sequelize } from "sequelize-typescript";
+const dbConfig = require('../config/config.js');
 
 // import MODELS from "./model_name";
-// import Aluno from "./alunos";
+import Collection from "./Collection";
 
 const sequelize = new Sequelize(dbConfig.development);
 
-// Aluno.initModel(sequelize);
+Collection.initModel(sequelize);
 // model_name.init(sequelize);
 // model_name.init(sequelize);
 
-/* [model_name, model_name].forEach((model) => {
+/* [Collection].forEach((model) => {
   if ("associate" in model) {
     model.associate!(sequelize.models);
   }
 }); */
 
-export { sequelize /*, Aluno */ };
-// export { sequelize, model_name, model_name};
+export { sequelize, Collection };

@@ -1,30 +1,28 @@
-import dotenv from 'dotenv';
-import { Dialect } from 'sequelize';
-
+const dotenv = require("dotenv");
 dotenv.config();
 
-export default {
+module.exports = {
   development: {
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
-    dialect: 'mysql' as Dialect,
+    dialect: "mysql",
     logging: false,
     define: {
       timestamps: true,
       underscored: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
-    }
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
   },
   test: {
-    username: 'root',
+    username: "root",
     password: null,
-    database: 'database_test',
-    host: '127.0.0.1',
-    dialect: 'mysql' as Dialect,
+    database: "database_test",
+    host: "127.0.0.1",
+    dialect: "mysql",
   },
   production: {
     username: process.env.DB_USER,
@@ -32,7 +30,7 @@ export default {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
-    dialect: 'mysql' as Dialect,
+    dialect: "mysql",
     logging: false,
-  }
+  },
 };
