@@ -7,8 +7,8 @@ import cors from "cors";
 import "./models/index";
 import { CorsOptions } from "cors";
 
-import homeRoutes from "./routes/homeRoute";
-import collectionRoutes from "./routes/collectionRoutes";
+import homeRoutes from "./routes/home.route";
+import collectionRoutes from "./routes/collection.route";
 
 const limiter = rateLimiting({
   windowMs: 1000 * 60 * 60 * 12,
