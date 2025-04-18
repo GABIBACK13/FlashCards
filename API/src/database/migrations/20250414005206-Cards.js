@@ -10,6 +10,15 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
       },
+      ownerID: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      public: {
+        type: Sequelize.BOOLEAN,
+        defaultValue:true,
+        allowNull: false
+      },
       title: {
         type: Sequelize.STRING(40),
         allowNull: false,

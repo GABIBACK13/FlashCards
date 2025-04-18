@@ -1,7 +1,6 @@
 import { Request, RequestHandler, Response } from "express";
-import { ValidationError } from "sequelize";
 import CollectionService from "../services/collection.service";
-import { CustomValidationError } from "../services/customErrors.service";
+import errorHandler from "../utils/errorHandler";
 
 class CollectionController {
   store: RequestHandler = async (req: Request, res: Response) => {
@@ -10,26 +9,7 @@ class CollectionController {
       res.status(201).json(collection);
       return;
 
-    } catch (error: any) {
-      if (error instanceof ValidationError) {
-        res.status(400).json({
-          errors: error.errors.map((err) => ({
-            message: err.message,
-            path: err.path,
-            value: err.value,
-          })),
-        });
-        return;
-      }
-
-      if (error instanceof CustomValidationError) {
-        res.status(400).json({ errors: error.errors });
-        return;
-      }
-
-      res.status(500).json({ error: error.message });
-      return;
-    }
+    } catch (error: any) { return errorHandler(error, res) }
   }
 
   index: RequestHandler = async (req: Request, res: Response) =>  {
@@ -37,26 +17,7 @@ class CollectionController {
       const collections = await CollectionService.getAll();
       res.status(201).json(collections);
       return;
-    } catch (error: any) {
-      if (error instanceof ValidationError) {
-        res.status(400).json({
-          errors: error.errors.map((err) => ({
-            message: err.message,
-            path: err.path,
-            value: err.value,
-          })),
-        });
-        return;
-      }
-
-      if (error instanceof CustomValidationError) {
-        res.status(400).json({ errors: error.errors });
-        return;
-      }
-
-      res.status(500).json({ error: error.message });
-      return;
-    }
+    } catch (error: any) { return errorHandler(error, res) }
   }
 
   patch: RequestHandler = async (req: Request, res: Response) => {
@@ -65,26 +26,7 @@ class CollectionController {
       res.status(200).json(collectionUpdated);
       return;
 
-    } catch (error: any) {
-      if (error instanceof ValidationError) {
-        res.status(400).json({
-          errors: error.errors.map((err) => ({
-            message: err.message,
-            path: err.path,
-            value: err.value,
-          })),
-        });
-        return;
-      }
-
-      if (error instanceof CustomValidationError) {
-        res.status(400).json({ errors: error.errors });
-        return;
-      }
-
-      res.status(500).json({ error: error.message });
-      return;
-    }
+    } catch (error: any) { return errorHandler(error, res) }
   } 
   
   delete: RequestHandler = async (req: Request, res: Response) => {
@@ -93,26 +35,7 @@ class CollectionController {
       res.status(200).json(collectionDeleted);
       return;
 
-    } catch (error: any) {
-      if (error instanceof ValidationError) {
-        res.status(400).json({
-          errors: error.errors.map((err) => ({
-            message: err.message,
-            path: err.path,
-            value: err.value,
-          })),
-        });
-        return;
-      }
-
-      if (error instanceof CustomValidationError) {
-        res.status(400).json({ errors: error.errors });
-        return;
-      }
-
-      res.status(500).json({ error: error.message });
-      return;
-    }
+    } catch (error: any) { return errorHandler(error, res) }
   }
 }
 

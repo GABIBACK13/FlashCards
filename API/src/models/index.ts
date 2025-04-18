@@ -1,19 +1,20 @@
 import { Sequelize } from "sequelize-typescript";
 const dbConfig = require('../config/config.js');
 
-// import MODELS from "./model_name";
 import Collection from "./Collection";
+import Card from "./Card";
+import CollectionCard from "./CollectionCard";
+
 
 const sequelize = new Sequelize(dbConfig.development);
 
 Collection.initModel(sequelize);
-// model_name.init(sequelize);
-// model_name.init(sequelize);
+Card.initModel(sequelize);
+CollectionCard.initModel(sequelize);
 
-/* [Collection].forEach((model) => {
-  if ("associate" in model) {
-    model.associate!(sequelize.models);
-  }
-}); */
+// Associações
+Collection.associate({ Card });
+Card.associate({ Collection });
+CollectionCard.associate({ Collection, Card });
 
-export { sequelize, Collection };
+export { sequelize, Collection, Card, CollectionCard };

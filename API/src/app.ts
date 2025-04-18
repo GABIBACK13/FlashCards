@@ -9,6 +9,7 @@ import { CorsOptions } from "cors";
 
 import homeRoutes from "./routes/home.route";
 import collectionRoutes from "./routes/collection.route";
+import cardRoutes from "./routes/card.route";
 
 const limiter = rateLimiting({
   windowMs: 1000 * 60 * 60 * 12,
@@ -48,7 +49,8 @@ class App {
   }
   routes() {
     this.app.use("/", homeRoutes);
-    this.app.use("/collections", collectionRoutes)
+    this.app.use("/collections", collectionRoutes);
+    this.app.use("/collections/:collectionID/cards", cardRoutes);
   }
 }
 

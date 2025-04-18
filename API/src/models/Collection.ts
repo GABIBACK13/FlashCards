@@ -1,17 +1,6 @@
-import { Model, DataTypes, Sequelize, Optional, ModelStatic } from "sequelize";
-// Interface para os atributos do modelo
-interface CollectionAttributes {
-  collectionID: number;
-  name: string;
-  private: boolean;
-  allowed: Record<string, number> | null;
-  created_at: Date;
-  updated_at: Date;
-}
-
-// Campos Opcionais
-interface CollectionCreationAttributes
-  extends Optional<CollectionAttributes, "collectionID" | "created_at" | "updated_at" | "allowed"> {}
+import { Model, DataTypes, Sequelize } from "sequelize";
+import { CollectionAttributes, CollectionCreationAttributes } from "../types/collection.types";
+import Card from "./Card";
 
 class Collection extends Model<CollectionAttributes, CollectionCreationAttributes> implements CollectionAttributes {
   public collectionID!: number;
@@ -59,6 +48,13 @@ class Collection extends Model<CollectionAttributes, CollectionCreationAttribute
         underscored: false,
       }
     );
+  }
+  static associate(models: any) {
+    Collection.belongsToMany(models.Card, {
+      through: 'CollectionCard',
+      foreignKey: 'collectionID',
+      otherKey: 'cardID',
+    });
   }
 }
 

@@ -1,21 +1,11 @@
-import { Model, DataTypes, Sequelize, Optional } from "sequelize";
-// Interface para os atributos do modelo
-interface CardsAttributes {
-  cardID: number;
-  title: string;
-  question: string;
-  alternatives: Record<string, string>;
-  answer: number;
-  created_at: Date;
-  updated_at: Date;
-}
+import { Model, DataTypes, Sequelize } from "sequelize";
+import Collection from "./Collection";
+import { CardsAttributes, CardsCreationAttributes } from "../types/card.types";
 
-// Campos Opcionais
-interface CardsCreationAttributes extends Optional<CardsAttributes, "cardID" | "created_at" | "updated_at"> {}
-
-
-class Cards extends Model<CardsAttributes, CardsCreationAttributes> implements CardsAttributes {
+class Card extends Model<CardsAttributes, CardsCreationAttributes> implements CardsAttributes {
   public cardID!: number;
+  public ownerID!: number;
+  public public!: boolean;
   public title!: string;
   public question!: string;
   public alternatives!: Record<string, string>;
@@ -26,6 +16,10 @@ class Cards extends Model<CardsAttributes, CardsCreationAttributes> implements C
   static initModel(sequelize: Sequelize) {
     return super.init(
       {
+        public: {
+          type: DataTypes.BOOLEAN,
+          allowNull:false
+        },
         title: {
           type: DataTypes.STRING(40),
           allowNull: false,
@@ -38,10 +32,10 @@ class Cards extends Model<CardsAttributes, CardsCreationAttributes> implements C
         },
         question: {
           type: DataTypes.STRING,
-          allowNull:false
+          allowNull: false,
         },
         alternatives: {
-          type:DataTypes.JSON,
+          type: DataTypes.JSON,
           allowNull: false,
           validate: {
             maxKeys(value: Record<string, string>) {
@@ -53,13 +47,13 @@ class Cards extends Model<CardsAttributes, CardsCreationAttributes> implements C
               if (Object.keys(value).length < 2) {
                 throw new Error("Alternatives must have at least 2 keys");
               }
-            }
-          }
+            },
+          },
         },
         answer: {
           type: DataTypes.INTEGER,
-          allowNull: false
-        }
+          allowNull: false,
+        },
       },
       {
         sequelize,
@@ -70,7 +64,13 @@ class Cards extends Model<CardsAttributes, CardsCreationAttributes> implements C
       }
     );
   }
-  
+  static associate(models: any) {
+    Card.belongsToMany(models.Collection, {
+      through: "CollectionCard",
+      foreignKey: "cardID",
+      otherKey: "collectionID",
+    });
+  }
 }
 
-export default Cards;
+export default Card;
