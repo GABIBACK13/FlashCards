@@ -16,9 +16,19 @@ class Card extends Model<CardsAttributes, CardsCreationAttributes> implements Ca
   static initModel(sequelize: Sequelize) {
     return super.init(
       {
+        cardID: {
+          type: DataTypes.NUMBER,
+          primaryKey: true,
+          autoIncrement: true,
+          allowNull: false,
+        },
+        ownerID: {
+          type: DataTypes.NUMBER,
+          allowNull:false,
+        },
         public: {
           type: DataTypes.BOOLEAN,
-          allowNull:false
+          allowNull: false,
         },
         title: {
           type: DataTypes.STRING(40),
@@ -60,7 +70,7 @@ class Card extends Model<CardsAttributes, CardsCreationAttributes> implements Ca
         modelName: "Card",
         tableName: "Cards",
         timestamps: true,
-        underscored: true,
+        underscored: false,
       }
     );
   }

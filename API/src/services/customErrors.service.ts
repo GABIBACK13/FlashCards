@@ -6,3 +6,9 @@ export class CustomValidationError extends Error {
     this.errors = errors;
   }
 }
+
+export type ErrorMessege = {
+  message:string;
+  path:string;
+  value?:any;
+}

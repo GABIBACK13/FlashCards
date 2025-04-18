@@ -15,3 +15,10 @@ export interface CardsAttributes {
 
 // Campos Opcionais
 export interface CardsCreationAttributes extends Optional<CardsAttributes, "cardID" | "ownerID" | "created_at" | "updated_at"> {}
+
+export type SearchParams = {
+  cardID?: number;
+  ownerID?: number;
+  title?: string;
+  question?: string;
+}
