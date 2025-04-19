@@ -1,12 +1,12 @@
 import { Collection } from "../models";
 import { CustomValidationError } from "./customErrors.service";
 import {collectionBody, SearchParams } from "../types/collection.types";
+import { UserData } from "../middlewares/auth.middleware";
 
 class CollectionService {
   
   validate(collection:collectionBody, collectionID?: number): void {
     const errors = [];
-
     if(!collectionID) {
       if (!collection.name || collection.name.length < 3 || collection.name.length > 40) {
         errors.push({ message: "Name must be between 3 and 40", path: "name", value: collection.name });
@@ -34,26 +34,34 @@ class CollectionService {
     }
   }
 
-  async create(collection: collectionBody):Promise<Collection> {
+  validateUserData(userData:UserData) {
+
+  }
+
+  async create(collection: collectionBody, userData:UserData):Promise<Collection> {
+    this.validateUserData(userData);
     this.validate(collection);
-    const collectionSaved = await Collection.create(collection);
+    const collectionSaved = await Collection.create({...collection, userID:userData.userID});
     return collectionSaved;
   }
 
-  async getAll(limit:number=10, offset:number=0, where:SearchParams={}):Promise<Collection[]> {
-    const collections = await Collection.findAll({where:where ,limit: limit, offset:offset});
+  async getAll( userData:UserData, limit:number=10, offset:number=0, where:SearchParams={}):Promise<Collection[]> {
+    this.validateUserData(userData);
+    const collections = await Collection.findAll({where:{userID:userData.userID,...where} ,limit: limit, offset:offset});
     return collections;
   }
 
-  async getOne( where:SearchParams={}):Promise<Collection | null> {
-    const collection = await Collection.findOne({where:where});
+  async getOne( where:SearchParams={}, userData:UserData):Promise<Collection | null> {
+    this.validateUserData(userData);
+    const collection = await Collection.findOne({where:{userID:userData.userID, ...where}});
     return collection;
   }
 
-  async updateOne(collection: collectionBody, id:number ):Promise<Collection> {
+  async updateOne(collection: collectionBody, id:number, userData:UserData ):Promise<Collection> {
+    this.validateUserData(userData);
     this.validate(collection, id);
 
-    const [updated] = await Collection.update(collection, {where:{collectionID:id}});
+    const [updated] = await Collection.update(collection, {where:{collectionID:id, userID:userData.userID}});
     if(updated === 0) {
       throw new CustomValidationError([
         {
@@ -62,13 +70,13 @@ class CollectionService {
           value:collection
         }]);
       } else {
-        const updatedCollection = await this.getOne({collectionID:id});
+        const updatedCollection = await this.getOne({collectionID:id}, userData);
         return updatedCollection as Collection;
     }
   }
 
-  async deleteOne(id:number ):Promise<Collection> {
-    const removedCollection = await this.getOne({collectionID:id});
+  async deleteOne(id:number, userData:UserData):Promise<Collection> {
+    const removedCollection = await this.getOne({collectionID:id}, userData);
     if(!removedCollection) {
       throw new CustomValidationError([
         {

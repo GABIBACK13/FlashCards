@@ -4,6 +4,7 @@ import Card from "./Card";
 
 class Collection extends Model<CollectionAttributes, CollectionCreationAttributes> implements CollectionAttributes {
   public collectionID!: number;
+  public userID!:number;
   public name!: string;
   public private!: boolean;
   public allowed!: Record<string, number> | null;
@@ -17,6 +18,10 @@ class Collection extends Model<CollectionAttributes, CollectionCreationAttribute
           type: DataTypes.INTEGER,
           autoIncrement: true,
           primaryKey: true,
+        },
+        userID: {
+          type: DataTypes.INTEGER,
+          allowNull: false
         },
         name: {
           type: DataTypes.STRING,

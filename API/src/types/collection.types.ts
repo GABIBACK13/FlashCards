@@ -11,6 +11,7 @@ export interface collectionBody extends CollectionCreationAttributes, Body {
 
 export type SearchParams = {
   collectionID?: number;
+  userID?:number;
   name?: string;
   private?: boolean;
   allowed?: Allowed;
@@ -18,6 +19,7 @@ export type SearchParams = {
 
 export interface CollectionAttributes {
   collectionID: number;
+  userID:number;
   name: string;
   private: boolean;
   allowed: Record<string, number> | null;
@@ -27,4 +29,4 @@ export interface CollectionAttributes {
 
 // Campos Opcionais
 export interface CollectionCreationAttributes
-  extends Optional<CollectionAttributes, "collectionID" | "created_at" | "updated_at" | "allowed"> {}
+  extends Optional<CollectionAttributes, "collectionID" | 'userID' |"created_at" | "updated_at" | "allowed"> {}
